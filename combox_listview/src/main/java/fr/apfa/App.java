@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -44,7 +45,7 @@ public class App extends Application {
        
         List<Country> countries = Country.getContriesList();
 
-        comboBoxList.addAll(countries);git 
+        comboBoxList.addAll(countries);
         ComboBox<Country> comboBoxCountries = new ComboBox<>(comboBoxList);
         // comboBoxList.addListener(new ListChangeListener<Country>() { // ajout du
         // listenner
@@ -92,12 +93,19 @@ public class App extends Application {
             listViewCountries.getItems().addAll(comboBoxCountries.getItems());
             comboBoxCountries.getItems().clear();
 
-            // if (selectedItem != null && !selectedItem.isEmpty()) {
-            // // addButton.setDisable(false);
-            // list.getItems().add(selectedItem);
-            // logger.info("country added");
-            // comboBox.getItems().remove(selectedItem); // ne fonctionne pas
 
+            
+
+        deleteAllButton.setOnAction(e ->{
+            comboBoxCountries.getItems().addAll(listViewCountries.getItems());
+        });
+
+        listViewCountries.getItems().clear();
+        });
+        
+
+                quitButton.setOnAction(value -> {
+            Platform.exit();
         });
 
         HBox hboxForButton = new HBox(upButton, downButton);
